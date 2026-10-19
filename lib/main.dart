@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_computing/screens/login_screen.dart';
-import 'package:mobile_computing/screens/registration_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,7 +13,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Mobile Computing',
-      home: RegistrationScreen(),
+      home: LoginScreen(),
     );
   }
 }
