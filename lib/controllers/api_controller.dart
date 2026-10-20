@@ -11,6 +11,12 @@ class ApiController extends GetxController {
   List<ProductModel> products = [];
   List<UserModel> users = [];
 
+  @override
+  void onInit() {
+    super.onInit();
+    getProducts();
+  }
+
   Future<void> getProducts() async {
     final response = await apiServices.Products();
 

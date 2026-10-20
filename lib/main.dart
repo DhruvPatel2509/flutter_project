@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_computing/screens/login_screen.dart';
+import 'package:get/get.dart';
+import 'package:mobile_computing/screens/products_screen.dart';
+
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -10,10 +12,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Mobile Computing',
-      home: LoginScreen(),
+      home: const ProductsScreen(),
     );
   }
 }

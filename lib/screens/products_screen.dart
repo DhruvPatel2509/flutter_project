@@ -1,38 +1,48 @@
-// import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-// import '../api_services/api_service.dart';
+import '../controllers/api_controller.dart';
 
-// class ProductsScreen extends StatelessWidget {
-//   const ProductsScreen({super.key});
+class ProductsScreen extends StatelessWidget {
+  const ProductsScreen({super.key});
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(title: const Text("Products")),
-//       body: FutureBuilder(
-//         future: ApiServices().getApi('https://dummyjson.com/products'),
-//         builder: (context, snapshot) {
-//           if (snapshot.connectionState == ConnectionState.waiting) {
-//             return const Center(child: CircularProgressIndicator());
-//           }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Products")),
+      body: GetBuilder<ApiController>(
+        init: ApiController(),
+        initState: (state) {
+          state.controller?.getProducts();
+        },
+        
+        builder: (controller) {
+          if (controller.products.isEmpty) {
+            return const Center(child: CircularProgressIndicator());
+          }
 
-//           if (snapshot.hasError) {
-//             return const Center(child: Text("Something went wrong"));
-//           }
+          return ListView.builder(
+            itemCount: controller.products.length,
+            itemBuilder: (context, index) {
+              final product = controller.products[index];
 
-//           final products = snapshot.data?.data['products'];
-
-//           return ListView.builder(
-//             itemCount: products.length,
-//             itemBuilder: (context, index) {
-//               return ListTile(
-//                 title: Text(products[index]['title']),
-//                 subtitle: Text('\$${products[index]['price']}'),
-//               );
-//             },
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }
+              return Card(
+                margin: const EdgeInsets.all(10),
+                child: ListTile(
+                  leading: Image.network(
+                    product.thumbnail ?? "",
+                    width: 60,
+                    height: 60,
+                    fit: BoxFit.cover,
+                  ),
+                  title: Text(product.title ?? ""),
+                  subtitle: Text("\$${product.price}"),
+                ),
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+}
